@@ -1,0 +1,55 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  #release:
+  #  types: [ published ]
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        unity: ["--unity", ""]
+        merge: ["", "--merge"]
+        configuration: ["", "-c Release"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.x.x
+
+    - name: Test (release)
+      run: |
+        dnx -y FGenerator.Cli -- build \
+          ${{ matrix.unity }} \
+          ${{ matrix.merge }} \
+          ${{ matrix.configuration }} \
+          --force --output  ./.z__merged_dll__ \
+          "src/*.cs"  # enquote to prevent expanding
+
+        ### Tests: Separate build and run to exclude unnecessary warnings from STDOUT ###
+
+        dotnet build         test   ${{ matrix.configuration }} -p:EmitCompilerGeneratedFiles=true -p:CompilerGeneratedFilesOutputPath="../.generated"
+        dotnet run --project test   ${{ matrix.configuration }} --no-build -v:q -- -md >> $GITHUB_STEP_SUMMARY
+
+    - name: Pathfinder
+      run:
+        ls -al
+
+    - name: Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: generated-sources${{ matrix.unity }}${{ matrix.merge }}${{ matrix.configuration }}
+        path: ./.generated/**
+        include-hidden-files: true
