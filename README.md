@@ -5,8 +5,12 @@
 Compile-Time **Macro for C#** You've Ever Dreamed
 
 [![nuget](https://img.shields.io/nuget/vpre/MacroDotNet)](https://www.nuget.org/packages/MacroDotNet)
-[![🇯🇵](https://img.shields.io/badge/🇯🇵-日本語版-789)](README.ja.md)
-[![🇨🇳](https://img.shields.io/badge/🇨🇳-简体中文-789)](README.zh-CN.md)
+&nbsp;
+[![🇯🇵](https://img.shields.io/badge/🇯🇵-日本語-789)](./README.ja.md)
+[![🇨🇳](https://img.shields.io/badge/🇨🇳-简体中文-789)](./README.zh-CN.md)
+[![🇺🇸](https://img.shields.io/badge/🇺🇸-English-789)](./README.md)
+&nbsp;
+[![🇯🇵](https://img.shields.io/badge/🇯🇵-詳説-green)](https://zenn.dev/sator_imaging/articles/0ac6bf76bafe2a)
 
 *Unity 2022.3.12+ is supported*
 
