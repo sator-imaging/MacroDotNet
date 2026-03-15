@@ -5,6 +5,8 @@ on:
   #  branches: [ "main" ]
   #  paths:
   #    - "src/**/*.cs"
+  release:
+    types: [ published ]
   workflow_call:
   workflow_dispatch:
 

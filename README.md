@@ -36,7 +36,7 @@ public partial class Example
 {
     // Template can be used on multiple fields
     private const string IncrementTemplate =
-        "$inline public $static $typeName Increment$displayName() => Interlocked.Increment(ref $fieldName);";
+        "public $static $typeName Increment$displayName() => Interlocked.Increment(ref $fieldName);";
 
     [Macro(IncrementTemplate)] private static int _globalCounter;
     [Macro(IncrementTemplate)] private int _retry;
@@ -49,7 +49,7 @@ public partial class Example
 Generated members are emitted into the same containing type hierarchy.
 
 ```cs
-// Atomic increment with aggressive inlining
+// $-tokens are replaced with corresponding symbol
 Example.IncrementGlobalCounter();
 
 // Reusable [Macro] template generates methods as you imagined
