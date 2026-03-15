@@ -48,6 +48,7 @@ namespace System.Diagnostics.CodeAnalysis
 
 namespace MacroDotNet
 {
+    [System.Diagnostics.Conditional(""DEBUG"")]
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = false)]
     internal sealed class MacroAttribute : Attribute
     {
