@@ -39,10 +39,11 @@ jobs:
         with:
           dotnet-version: 10.x.x
 
-      - run: |
+      - name: Build
+        run: |
           OUTDIR=./Unity
 
-          dnx -y FGenerator.Cli -- build \
+          dnx -y FGenerator.Cli --prerelease -- build \
             --unity --merge \
             --force --output $OUTDIR \
             "src/*.cs"  # enquote to prevent expanding

@@ -20,34 +20,33 @@ jobs:
         configuration: ["", "-c Release"]
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5      # v4.3.1
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9  # v4.3.1
+        with:
+          dotnet-version: 10.x.x
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 10.x.x
+      - name: Build
+        run: |
+          dnx -y FGenerator.Cli --prerelease -- build \
+            ${{ matrix.unity }} \
+            ${{ matrix.merge }} \
+            ${{ matrix.configuration }} \
+            --force --output  ./.z__merged_dll__ \
+            "src/*.cs"  # enquote to prevent expanding
 
-    - name: Test (release)
-      run: |
-        dnx -y FGenerator.Cli -- build \
-          ${{ matrix.unity }} \
-          ${{ matrix.merge }} \
-          ${{ matrix.configuration }} \
-          --force --output  ./.z__merged_dll__ \
-          "src/*.cs"  # enquote to prevent expanding
+      - name: Pathfinder
+        run:
+          ls -al ./.z__merged_dll__
 
-        ### Tests: Separate build and run to exclude unnecessary warnings from STDOUT ###
+      - name: Test
+        run: |
+          dotnet build         test   ${{ matrix.configuration }} \
+            -p:EmitCompilerGeneratedFiles=true \
+            -p:CompilerGeneratedFilesOutputPath="../.generated"
+          dotnet run --project test   ${{ matrix.configuration }} --no-build -v:q -- -md >> $GITHUB_STEP_SUMMARY
 
-        dotnet build         test   ${{ matrix.configuration }} -p:EmitCompilerGeneratedFiles=true -p:CompilerGeneratedFilesOutputPath="../.generated"
-        dotnet run --project test   ${{ matrix.configuration }} --no-build -v:q -- -md >> $GITHUB_STEP_SUMMARY
-
-    - name: Pathfinder
-      run:
-        ls -al
-
-    - name: Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: generated-sources${{ matrix.unity }}${{ matrix.merge }}${{ matrix.configuration }}
-        path: ./.generated/**
-        include-hidden-files: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generated-sources${{ matrix.unity }}${{ matrix.merge }}${{ matrix.configuration }}
+          path: ./.generated/**
+          include-hidden-files: true
