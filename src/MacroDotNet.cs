@@ -1,7 +1,7 @@
 // Licensed under the Apache-2.0 License
 // https://github.com/sator-imaging/MacroDotNet
 
-#:sdk FGenerator.Sdk@3.0.1
+#:sdk FGenerator.Sdk@3.2.1
 //                   ~~~~~ Push to origin AFTER new NUGET package is available
 
 using FGenerator;
