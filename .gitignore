@@ -5,7 +5,7 @@ obj
 !.github
 !src
 !test
-!test-package
+!test-integration
 !Unity
 
 !.gitignore
