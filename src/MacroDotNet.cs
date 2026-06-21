@@ -1,7 +1,7 @@
 // Licensed under the Apache-2.0 License
 // https://github.com/sator-imaging/MacroDotNet
 
-#:sdk FGenerator.Sdk@*
+#:sdk FGenerator.Sdk@3.2.1
 
 using FGenerator;
 using Microsoft.CodeAnalysis;
