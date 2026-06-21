@@ -1,5 +1,5 @@
 #:package FUnit@*
-#:package MacroDotNet@3.0.1
+#:package MacroDotNet@3.0.2
 //                    ~~~~~ Push AFTER compiled generators are published
 
 using MacroDotNet;
